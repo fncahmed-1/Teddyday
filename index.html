@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultra Premium Teddy Surprise ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"><style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:black;
+    overflow:hidden;
+}
+
+.container{
+    text-align:center;
+    padding:40px;
+    max-width:520px;
+    color:white;
+    animation:fadeIn 2s ease;
+    opacity:0;
+}
+
+.container.show{
+    opacity:1;
+}
+
+button{
+    padding:16px 35px;
+    border:none;
+    border-radius:50px;
+    background:#ff4d6d;
+    color:white;
+    font-weight:600;
+    font-size:1.1rem;
+    cursor:pointer;
+    transition:0.35s;
+    box-shadow:0 10px 25px rgba(255,77,109,0.5);
+}
+
+button:hover{
+    transform:scale(1.12);
+}
+
+.modal{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    opacity:0;
+    pointer-events:none;
+    transition:1s;
+}
+
+.modal.show{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.surprise-img{
+    max-width:90%;
+    max-height:70vh;
+    border-radius:25px;
+    transform:scale(0);
+    transition:1s cubic-bezier(.17,.67,.3,1.33);
+}
+
+.modal.show .surprise-img{
+    transform:scale(1);
+}
+
+.love-text{
+    color:white;
+    margin-top:25px;
+    font-size:1.5rem;
+    font-weight:600;
+    opacity:0;
+    transform:translateY(20px);
+    transition:1s;
+}
+
+.modal.show .love-text{
+    opacity:1;
+    transform:translateY(0);
+}
+
+@keyframes fadeIn{
+    from{opacity:0;} 
+    to{opacity:1;} 
+}
+
+.heart{
+    position:absolute;
+    bottom:-50px;
+    color:#ff4d6d;
+    font-size:22px;
+    animation:rise 8s linear infinite;
+}
+
+@keyframes rise{
+    to{
+        transform:translateY(-110vh);
+        opacity:0;
+    }
+}
+</style></head>
+<body><div class="container" id="container">
+    <h1>Happy Teddy Day ❤️</h1>
+    <p>Tap below for something special...</p>
+    <button onclick="openSurprise()">Open Surprise 🧸</button>
+</div><div class="modal" id="modal">
+    <img src="teddy.png" class="surprise-img">
+    <div class="love-text" id="loveText"></div>
+    <div class="love-text" id="arabicText"></div>
+</div><audio id="music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio><script>
+const container = document.getElementById('container');
+const modal = document.getElementById('modal');
+const loveText = document.getElementById('loveText');
+const arabicText = document.getElementById('arabicText');
+const music = document.getElementById('music');
+
+window.onload = ()=>{
+    container.classList.add('show');
+}
+
+function openSurprise(){
+    modal.classList.add('show');
+
+    // heartbeat vibration
+    if(navigator.vibrate){
+        navigator.vibrate([200,100,200,100,200]);
+    }
+
+    // play music
+    music.play();
+
+    // typing English love message
+    let message = "If I were there, this teddy would be me hugging you tightly ❤️";
+    let i=0;
+    loveText.innerHTML = '';
+    let typing = setInterval(()=>{
+        if(i<message.length){
+            loveText.innerHTML += message.charAt(i);
+            i++;
+        } else {
+            clearInterval(typing);
+            // after English message, type Arabic message
+            typeArabic();
+        }
+    },50);
+}
+
+function typeArabic(){
+    let arabicMessage = "أقسم بالله أنني أحبك كثيراً ❤️😭";
+    let j=0;
+    arabicText.innerHTML = '';
+    let typingArabic = setInterval(()=>{
+        if(j<arabicMessage.length){
+            arabicText.innerHTML += arabicMessage.charAt(j);
+            j++;
+        } else {
+            clearInterval(typingArabic);
+        }
+    },50);
+}
+
+// floating hearts
+for(let k=0;k<30;k++){
+    let heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.innerHTML='❤';
+    heart.style.left = Math.random()*100+'vw';
+    heart.style.fontSize = (Math.random()*20+10)+'px';
+    heart.style.animationDuration = (Math.random()*3+5)+'s';
+    document.body.appendChild(heart);
+}
+</script></body>
+</html>
